@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Custom Hometab",
+  "version": "1.0.0",
+  "description": "Uma nova aba personalizada feita com React e Vite.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+    "permissions": [
+    "tabs"
+  ]
+}
