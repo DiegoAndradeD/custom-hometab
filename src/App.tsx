@@ -1,30 +1,30 @@
-// src/App.tsx
-
-import SearchBar from "./components/SearchBar";
+import ControlMenu from "./components/ControlMenu";
+import { cn } from "./lib/utils";
+import useUIStore from "./stores/ui.store";
 
 function App() {
+  const { wallpaper } = useUIStore();
   return (
-    // 1. O Contêiner Principal com o gradiente de fundo
-    <div
-      className="
-      relative
-      flex justify-center items-center
-      min-h-screen w-full
-      bg-gray-900 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900
-      text-white font-sans p-4
-    "
+    <main
+      className={cn(
+        `relative flex min-h-screen w-full
+         text-white font-sans p-4 bg-[url('${wallpaper}')]
+         bg-cover bg-center bg-fixed`
+      )}
     >
-      <div className="absolute inset-0 w-full h-full bg-white/10 backdrop-blur-xl z-0"></div>
-      <div className="relative z-10 w-full">
-        <div
-          className="
-
+      <div
+        className="
+          absolute inset-0 w-full h-full
+          backdrop-blur-sm bg-black/30
+          z-0
         "
-        >
-          <SearchBar />
-        </div>
-      </div>
-    </div>
+      ></div>
+      <section className="z-10">
+        <header>
+          <ControlMenu />
+        </header>
+      </section>
+    </main>
   );
 }
 
