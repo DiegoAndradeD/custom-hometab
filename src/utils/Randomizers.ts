@@ -1,6 +1,10 @@
 class Randomizers {
   private static shuffledImages: string[] = [];
-  private static allImages: string[] = ["/wallpaper1.jpg"];
+  private static allImages: string[] = [
+    "/wallpaper1.jpg",
+    "/wallpaper2.jpg",
+    "/wallpaper3.jpg",
+  ];
 
   private static shuffleArray<T>(array: T[]): T[] {
     const copy = [...array];
@@ -11,11 +15,20 @@ class Randomizers {
     return copy;
   }
 
-  static getRandomWallpaper(): string {
+  static getRandomWallpaper(current: string): string {
     if (this.shuffledImages.length === 0) {
       this.shuffledImages = this.shuffleArray(this.allImages);
     }
-    return this.shuffledImages.shift()!;
+
+    let next = this.shuffledImages.shift()!;
+    if (next === current) {
+      if (this.shuffledImages.length === 0) {
+        this.shuffledImages = this.shuffleArray(this.allImages);
+      }
+      next = this.shuffledImages.shift()!;
+    }
+
+    return next;
   }
 }
 

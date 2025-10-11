@@ -1,23 +1,18 @@
 import ControlMenu from "./components/ControlMenu";
-import { cn } from "./lib/utils";
 import useUIStore from "./stores/ui.store";
 
 function App() {
-  const { wallpaper } = useUIStore();
+  const { wallpaper, backdrop, isBackdropActive } = useUIStore();
   return (
     <main
-      className={cn(
-        `relative flex min-h-screen w-full
-         text-white font-sans p-4 bg-[url('${wallpaper}')]
-         bg-cover bg-center bg-fixed`
-      )}
+      className="relative flex min-h-screen w-full text-white font-sans p-4 bg-cover bg-center bg-fixed transition-all duration-500"
+      style={{ backgroundImage: `url(${wallpaper})` }}
     >
       <div
-        className="
-          absolute inset-0 w-full h-full
-          backdrop-blur-sm bg-black/30
-          z-0
-        "
+        className="absolute inset-0 w-full h-full bg-black/30 z-0"
+        style={{
+          backdropFilter: `${isBackdropActive ? `blur(${backdrop}px)` : ""}`,
+        }}
       ></div>
       <section className="z-10">
         <header>
