@@ -9,15 +9,17 @@ interface IMenuBarOptionsProps {
   wallpaper: string;
   setWallpaper: (wallpaper: string) => void;
   themesOptions: ISubmenuItem[];
+  toggleSearchBar: () => void;
+  isSearchBarActive: boolean;
 }
 
 interface IMenuBarOptions {
   name: string;
-  items: {
+  items: Array<{
     name: string;
-    func: () => void;
-    subContent?: React.ReactNode;
-  }[];
+    func?: () => void;
+    subContents?: React.ReactNode[];
+  }>;
 }
 
 interface IThemesProps {
@@ -29,6 +31,8 @@ export const MENU_BAR_OPTIONS = ({
   wallpaper,
   setWallpaper,
   themesOptions,
+  toggleSearchBar,
+  isSearchBarActive,
 }: IMenuBarOptionsProps): IMenuBarOptions[] => {
   return [
     {
@@ -43,13 +47,33 @@ export const MENU_BAR_OPTIONS = ({
         },
         {
           name: "Change Theme",
-          func: () => {},
-          subContent: <SubmenuList title="Themes" items={themesOptions} />,
+          subContents: [
+            <SubmenuList key="themes" title="Themes" items={themesOptions} />,
+          ],
         },
         {
           name: "Backdrop",
-          func: () => {},
-          subContent: <BackdropControl />,
+          subContents: [<BackdropControl key="backdrop" />],
+        },
+      ],
+    },
+    {
+      name: "WIDGETS",
+      items: [
+        {
+          name: "Search Bar",
+          subContents: [
+            <SubmenuList
+              key="search-bar"
+              items={[
+                {
+                  name: "Toggle search bar",
+                  onClick: toggleSearchBar,
+                  isActive: isSearchBarActive,
+                },
+              ]}
+            />,
+          ],
         },
       ],
     },

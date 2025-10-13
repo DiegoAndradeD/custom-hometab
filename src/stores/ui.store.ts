@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { createPersistedStore } from "../utils";
 
 interface UIStoreState {
   wallpaper: string;
@@ -18,18 +18,21 @@ const uiStoreInitialState: UIStoreState = {
   isBackdropActive: true,
 };
 
-const useUIStore = create<UIStoreState & UIStoreActions>((set, get) => ({
-  ...uiStoreInitialState,
-  setWallpaper: (wallpaper) => {
-    set({ wallpaper });
-  },
-  setBackdrop: (backdrop) => {
-    set({ backdrop });
-  },
-  toggleBackdrop: () => {
-    const { isBackdropActive } = get();
-    set({ isBackdropActive: !isBackdropActive });
-  },
-}));
+const useUIStore = createPersistedStore<UIStoreState & UIStoreActions>(
+  (set, get) => ({
+    ...uiStoreInitialState,
+    setWallpaper: (wallpaper) => {
+      set({ wallpaper });
+    },
+    setBackdrop: (backdrop) => {
+      set({ backdrop });
+    },
+    toggleBackdrop: () => {
+      const { isBackdropActive } = get();
+      set({ isBackdropActive: !isBackdropActive });
+    },
+  }),
+  "ui-storage"
+);
 
 export default useUIStore;
