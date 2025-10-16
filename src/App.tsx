@@ -5,7 +5,7 @@ import useWidgetsStore from "./stores/widgets.store";
 
 function App() {
   const { wallpaper, backdrop, isBackdropActive } = useUIStore();
-  const { isSearchBarActive } = useWidgetsStore();
+  const { searchBarWidget } = useWidgetsStore();
 
   return (
     <main
@@ -23,7 +23,7 @@ function App() {
           <ControlMenu />
         </header>
         <div className="flex flex-col items-center justify-center h-full w-full">
-          {isSearchBarActive && <SearchBar />}
+          {searchBarWidget.isSearchBarActive && <SearchBar />}
         </div>
       </section>
     </main>

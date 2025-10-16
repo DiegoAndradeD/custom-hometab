@@ -12,6 +12,7 @@ const inputVariants = cva(
       variant: {
         default:
           "!bg-input border-none hover:!bg-input/90 text-foreground focus-visible:!border-none focus-visible:ring-transparent",
+        underline: "!border-none !border-b-1 !border-input",
       },
     },
     defaultVariants: {
@@ -19,6 +20,8 @@ const inputVariants = cva(
     },
   }
 );
+
+export type TInputVariant = VariantProps<typeof inputVariants>["variant"];
 
 interface InputProps
   extends React.ComponentProps<"input">,

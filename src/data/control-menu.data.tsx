@@ -9,7 +9,7 @@ interface IMenuBarOptionsProps {
   wallpaper: string;
   setWallpaper: (wallpaper: string) => void;
   themesOptions: ISubmenuItem[];
-  toggleSearchBar: () => void;
+  handleToggleSearchBar: () => void;
   isSearchBarActive: boolean;
 }
 
@@ -31,7 +31,7 @@ export const MENU_BAR_OPTIONS = ({
   wallpaper,
   setWallpaper,
   themesOptions,
-  toggleSearchBar,
+  handleToggleSearchBar,
   isSearchBarActive,
 }: IMenuBarOptionsProps): IMenuBarOptions[] => {
   return [
@@ -68,11 +68,12 @@ export const MENU_BAR_OPTIONS = ({
               items={[
                 {
                   name: "Toggle search bar",
-                  onClick: toggleSearchBar,
+                  onClick: handleToggleSearchBar,
                   isActive: isSearchBarActive,
                 },
               ]}
             />,
+            <SubmenuList key="search-bar-variant" items={} />,
           ],
         },
       ],

@@ -1,23 +1,31 @@
+import type { ISearchBarWidget } from "../interfaces/searchBar-widget";
 import { createPersistedStore } from "../utils";
 
 interface UIStoreState {
-  isSearchBarActive: boolean;
+  searchBarWidget: ISearchBarWidget;
 }
 
 interface UIStoreActions {
-  toggleSearchBar: () => void;
+  setSearchBarWidget: (newProps: Partial<ISearchBarWidget>) => void;
 }
 
 const widgetsStoreInitialState: UIStoreState = {
-  isSearchBarActive: true,
+  searchBarWidget: {
+    isSearchBarActive: true,
+    variant: "default",
+  },
 };
 
 const useWidgetsStore = createPersistedStore<UIStoreState & UIStoreActions>(
-  (set, get) => ({
+  (set) => ({
     ...widgetsStoreInitialState,
-    toggleSearchBar: () => {
-      const { isSearchBarActive } = get();
-      set({ isSearchBarActive: !isSearchBarActive });
+    setSearchBarWidget: (newProps) => {
+      set((state) => ({
+        searchBarWidget: {
+          ...state.searchBarWidget,
+          ...newProps,
+        },
+      }));
     },
   }),
   "ui-storage"
