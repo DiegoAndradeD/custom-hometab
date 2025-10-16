@@ -20,19 +20,23 @@ const ControlMenu = () => {
   const { setTheme, theme } = useTheme();
   const { searchBarWidget, setSearchBarWidget } = useWidgetsStore();
 
-  const handleToggleSearchBar = () => {
-    setSearchBarWidget({
-      isSearchBarActive: !searchBarWidget.isSearchBarActive,
-    });
-  };
-
   const themesOptions = THEMES_OPTIONS({ setTheme, theme });
   const options = MENU_BAR_OPTIONS({
     wallpaper,
     setWallpaper,
     themesOptions,
-    handleToggleSearchBar,
+    handleToggleSearchBar: () =>
+      setSearchBarWidget({
+        isSearchBarActive: !searchBarWidget.isSearchBarActive,
+      }),
     isSearchBarActive: searchBarWidget.isSearchBarActive,
+    handleSearchBarVariantChange: (variant) => {
+      setSearchBarWidget({
+        ...searchBarWidget,
+        variant,
+      });
+    },
+    searchBarVariant: searchBarWidget.variant,
   });
 
   return (

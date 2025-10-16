@@ -3,6 +3,10 @@ import SubmenuList, {
   type ISubmenuItem,
 } from "../components/common/SubmenuList";
 import type { TTheme } from "../components/providers/ThemeProvider";
+import {
+  INPUT_VARIANT_OPTIONS,
+  type TInputVariant,
+} from "../components/ui/input";
 import Randomizers from "../utils/Randomizers";
 
 interface IMenuBarOptionsProps {
@@ -11,6 +15,8 @@ interface IMenuBarOptionsProps {
   themesOptions: ISubmenuItem[];
   handleToggleSearchBar: () => void;
   isSearchBarActive: boolean;
+  handleSearchBarVariantChange: (variant: TInputVariant) => void;
+  searchBarVariant: TInputVariant;
 }
 
 interface IMenuBarOptions {
@@ -33,6 +39,8 @@ export const MENU_BAR_OPTIONS = ({
   themesOptions,
   handleToggleSearchBar,
   isSearchBarActive,
+  handleSearchBarVariantChange,
+  searchBarVariant,
 }: IMenuBarOptionsProps): IMenuBarOptions[] => {
   return [
     {
@@ -73,7 +81,14 @@ export const MENU_BAR_OPTIONS = ({
                 },
               ]}
             />,
-            <SubmenuList key="search-bar-variant" items={} />,
+            <SubmenuList
+              key="search-bar-variant"
+              items={INPUT_VARIANT_OPTIONS.map((variant) => ({
+                name: variant ?? "",
+                onClick: () => handleSearchBarVariantChange(variant),
+                isActive: searchBarVariant === variant,
+              }))}
+            />,
           ],
         },
       ],

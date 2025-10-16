@@ -3,8 +3,11 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Search } from "lucide-react";
+import useWidgetsStore from "../stores/widgets.store";
 
 const SearchBar = () => {
+  const { searchBarWidget } = useWidgetsStore();
+
   const searchSchema = z.object({
     query: z.coerce.string().trim().min(1),
   });
@@ -38,10 +41,11 @@ const SearchBar = () => {
               <FormControl>
                 <Input
                   {...field}
+                  variant={searchBarWidget.variant}
                   className="md:w-[750px] md:h-14 rounded-4xl !text-lg !pl-6"
                   placeholder="Search in Google or type an URL"
                   endContent={
-                    <div className="bg-gradient-to-r from-[#1CD8D2] to-[#93EDC7] rounded-full p-2">
+                    <div className="bg-icon-background rounded-full p-2">
                       <Search className="text-white" />
                     </div>
                   }
