@@ -1,97 +1,12 @@
-import React from "react";
-import { MENU_BAR_OPTIONS, THEMES_OPTIONS } from "../data/control-menu.data";
-import useUIStore from "../stores/ui.store";
-import { useTheme } from "./providers/ThemeProvider";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "./ui/menubar";
-import useWidgetsStore from "../stores/widgets.store";
-import { Check } from "lucide-react";
+import UIControls from "./menu/UIControls";
+import WidgetControls from "./menu/WidgetControls";
+import { Menubar } from "./ui/menubar";
 
 const ControlMenu = () => {
-  const { setWallpaper, wallpaper } = useUIStore();
-  const { setTheme, theme } = useTheme();
-  const {
-    searchBarWidget,
-    setSearchBarWidget,
-    setDateAndTimeWidget,
-    dateAndTimeWidget,
-  } = useWidgetsStore();
-
-  const themesOptions = THEMES_OPTIONS({ setTheme, theme });
-  const options = MENU_BAR_OPTIONS({
-    wallpaper,
-    setWallpaper,
-    themesOptions,
-    handleToggleSearchBar: () =>
-      setSearchBarWidget({
-        isSearchBarActive: !searchBarWidget.isSearchBarActive,
-      }),
-    isSearchBarActive: searchBarWidget.isSearchBarActive,
-    handleSearchBarVariantChange: (variant) => {
-      setSearchBarWidget({
-        ...searchBarWidget,
-        variant,
-      });
-    },
-    searchBarVariant: searchBarWidget.variant,
-    handleToggleDateAndTime: () => {
-      setDateAndTimeWidget({
-        isDateAndTimeActive: !dateAndTimeWidget.isDateAndTimeActive,
-      });
-    },
-    isDateAndTimeActive: dateAndTimeWidget.isDateAndTimeActive,
-  });
-
   return (
     <Menubar>
-      {options.map((option) => (
-        <MenubarMenu key={option.name}>
-          <MenubarTrigger className="text-foreground !cursor-pointer">
-            {option.name}
-          </MenubarTrigger>
-
-          <MenubarContent>
-            {option.items.map((item, index) => (
-              <React.Fragment key={item.name}>
-                {item.subContents ? (
-                  <MenubarSub>
-                    <MenubarSubTrigger>{item.name}</MenubarSubTrigger>
-                    <MenubarSubContent>
-                      {item.subContents.map((sub, subIndex) => (
-                        <React.Fragment key={`${item.name}-sub-${subIndex}`}>
-                          {sub}
-                          {subIndex < item.subContents!.length - 1 && (
-                            <MenubarSeparator />
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </MenubarSubContent>
-                  </MenubarSub>
-                ) : (
-                  <MenubarItem onClick={item.func}>
-                    <div className="flex items-center justify-between w-full">
-                      {item.name}
-                      {item.isActive && (
-                        <Check width={16} height={16} className="text-white" />
-                      )}
-                    </div>
-                  </MenubarItem>
-                )}
-                {index < option.items.length - 1 && <MenubarSeparator />}
-              </React.Fragment>
-            ))}
-          </MenubarContent>
-        </MenubarMenu>
-      ))}
+      <UIControls />
+      <WidgetControls />
     </Menubar>
   );
 };
