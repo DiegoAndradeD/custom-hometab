@@ -14,11 +14,17 @@ import {
   MenubarTrigger,
 } from "./ui/menubar";
 import useWidgetsStore from "../stores/widgets.store";
+import { Check } from "lucide-react";
 
 const ControlMenu = () => {
   const { setWallpaper, wallpaper } = useUIStore();
   const { setTheme, theme } = useTheme();
-  const { searchBarWidget, setSearchBarWidget } = useWidgetsStore();
+  const {
+    searchBarWidget,
+    setSearchBarWidget,
+    setDateAndTimeWidget,
+    dateAndTimeWidget,
+  } = useWidgetsStore();
 
   const themesOptions = THEMES_OPTIONS({ setTheme, theme });
   const options = MENU_BAR_OPTIONS({
@@ -37,6 +43,12 @@ const ControlMenu = () => {
       });
     },
     searchBarVariant: searchBarWidget.variant,
+    handleToggleDateAndTime: () => {
+      setDateAndTimeWidget({
+        isDateAndTimeActive: !dateAndTimeWidget.isDateAndTimeActive,
+      });
+    },
+    isDateAndTimeActive: dateAndTimeWidget.isDateAndTimeActive,
   });
 
   return (
@@ -65,7 +77,14 @@ const ControlMenu = () => {
                     </MenubarSubContent>
                   </MenubarSub>
                 ) : (
-                  <MenubarItem onClick={item.func}>{item.name}</MenubarItem>
+                  <MenubarItem onClick={item.func}>
+                    <div className="flex items-center justify-between w-full">
+                      {item.name}
+                      {item.isActive && (
+                        <Check width={16} height={16} className="text-white" />
+                      )}
+                    </div>
+                  </MenubarItem>
                 )}
                 {index < option.items.length - 1 && <MenubarSeparator />}
               </React.Fragment>

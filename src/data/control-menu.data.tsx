@@ -17,6 +17,8 @@ interface IMenuBarOptionsProps {
   isSearchBarActive: boolean;
   handleSearchBarVariantChange: (variant: TInputVariant) => void;
   searchBarVariant: TInputVariant;
+  handleToggleDateAndTime: () => void;
+  isDateAndTimeActive: boolean;
 }
 
 interface IMenuBarOptions {
@@ -25,6 +27,7 @@ interface IMenuBarOptions {
     name: string;
     func?: () => void;
     subContents?: React.ReactNode[];
+    isActive?: boolean;
   }>;
 }
 
@@ -41,6 +44,8 @@ export const MENU_BAR_OPTIONS = ({
   isSearchBarActive,
   handleSearchBarVariantChange,
   searchBarVariant,
+  handleToggleDateAndTime,
+  isDateAndTimeActive,
 }: IMenuBarOptionsProps): IMenuBarOptions[] => {
   return [
     {
@@ -90,6 +95,13 @@ export const MENU_BAR_OPTIONS = ({
               }))}
             />,
           ],
+        },
+        {
+          name: "Toggle clock",
+          func: () => {
+            handleToggleDateAndTime();
+          },
+          isActive: isDateAndTimeActive,
         },
       ],
     },

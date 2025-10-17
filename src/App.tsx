@@ -1,11 +1,12 @@
 import ControlMenu from "./components/ControlMenu";
+import DateAndTime from "./components/DateAndTime";
 import SearchBar from "./components/SearchBar";
 import useUIStore from "./stores/ui.store";
 import useWidgetsStore from "./stores/widgets.store";
 
 function App() {
   const { wallpaper, backdrop, isBackdropActive } = useUIStore();
-  const { searchBarWidget } = useWidgetsStore();
+  const { searchBarWidget, dateAndTimeWidget } = useWidgetsStore();
 
   return (
     <main
@@ -19,8 +20,9 @@ function App() {
         }}
       ></div>
       <section className="z-10 w-full min-h-full overflow-y-hidden">
-        <header className="w-fit">
+        <header className="w-full flex items-center justify-between">
           <ControlMenu />
+          {dateAndTimeWidget.isDateAndTimeActive && <DateAndTime />}
         </header>
         <div className="flex flex-col items-center justify-center h-full w-full">
           {searchBarWidget.isSearchBarActive && <SearchBar />}

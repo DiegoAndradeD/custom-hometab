@@ -4,3 +4,7 @@ export interface ISearchBarWidget {
   isSearchBarActive: boolean;
   variant: TInputVariant;
 }
+
+export interface IDateAndTimeWidget {
+  isDateAndTimeActive: boolean;
+}
