@@ -1,23 +1,21 @@
 import { CirclePlus } from "lucide-react";
-import type { IBookmark } from "../../interfaces";
 import { Card, CardHeader, CardContent } from "../ui/card";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import BookmarkCard from "./BookmarkCard";
 import useModalStore, { LayoutModal } from "../../stores/modal.store";
+import useWidgetsStore from "../../stores/widgets.store";
 
 const BookmarkList = () => {
   const { toggleModal } = useModalStore();
-  const bookmarks: IBookmark[] = [
-    { title: "Google", url: "https://www.google.com" },
-    { title: "YouTube", url: "https://www.youtube.com" },
-    { title: "GitHub", url: "https://github.com" },
-  ];
+  const { bookmarksWidget } = useWidgetsStore();
+
   return (
     <ScrollArea className="w-[750px] rounded-md border-none whitespace-nowrap">
       <div className="flex w-max items-center gap-6 p-4">
-        {bookmarks.map((bookmark) => (
-          <BookmarkCard key={bookmark.url} bookmark={bookmark} />
-        ))}
+        {bookmarksWidget.items.length > 0 &&
+          bookmarksWidget.items.map((bookmark) => (
+            <BookmarkCard key={bookmark.url} bookmark={bookmark} />
+          ))}
         <Card
           onClick={() => {
             toggleModal(LayoutModal.CreateBookmark);
