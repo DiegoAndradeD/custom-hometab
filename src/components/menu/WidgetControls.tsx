@@ -1,4 +1,3 @@
-// Components
 import { Check } from "lucide-react";
 import {
   MenubarContent,
@@ -10,35 +9,31 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "../ui/menubar";
-// Stores
-import useWidgetsStore from "../../stores/widgets.store";
-// Data
+
+import useWidgetsStore, {
+  widgetsStoreInitialState,
+} from "../../stores/widgets.store";
 import { INPUT_VARIANT_OPTIONS } from "../ui/input";
 
 const WidgetControls = () => {
-  const {
-    searchBarWidget,
-    setSearchBarWidget,
-    dateAndTimeWidget,
-    setDateAndTimeWidget,
-  } = useWidgetsStore();
+  const { searchBarWidget, dateAndTimeWidget, bookmarksWidget, updateWidget } =
+    useWidgetsStore();
 
-  const handleToggleSearchBar = () => {
-    setSearchBarWidget({
-      isSearchBarActive: !searchBarWidget.isSearchBarActive,
-    });
-  };
-
-  const handleToggleDateAndTime = () => {
-    setDateAndTimeWidget({
-      isDateAndTimeActive: !dateAndTimeWidget.isDateAndTimeActive,
-    });
+  const toggleWidget = <
+    K extends "searchBarWidget" | "dateAndTimeWidget" | "bookmarksWidget"
+  >(
+    key: K,
+    prop: keyof (typeof widgetsStoreInitialState)[K]
+  ) => {
+    updateWidget(key, {
+      [prop]: !useWidgetsStore.getState()[key][prop],
+    } as any);
   };
 
   const handleSearchBarVariantChange = (
     variant: (typeof INPUT_VARIANT_OPTIONS)[number]
   ) => {
-    setSearchBarWidget({ variant });
+    updateWidget("searchBarWidget", { variant });
   };
 
   return (
@@ -50,7 +45,11 @@ const WidgetControls = () => {
         <MenubarSub>
           <MenubarSubTrigger>Search Bar</MenubarSubTrigger>
           <MenubarSubContent>
-            <MenubarItem onClick={handleToggleSearchBar}>
+            <MenubarItem
+              onClick={() =>
+                toggleWidget("searchBarWidget", "isSearchBarActive")
+              }
+            >
               <div className="flex items-center justify-between w-full">
                 Search Bar
                 {searchBarWidget.isSearchBarActive && (
@@ -58,7 +57,9 @@ const WidgetControls = () => {
                 )}
               </div>
             </MenubarItem>
+
             <MenubarSeparator />
+
             {INPUT_VARIANT_OPTIONS.map((variant) => (
               <MenubarItem
                 key={variant}
@@ -74,11 +75,30 @@ const WidgetControls = () => {
             ))}
           </MenubarSubContent>
         </MenubarSub>
+
         <MenubarSeparator />
-        <MenubarItem onClick={handleToggleDateAndTime}>
+
+        <MenubarItem
+          onClick={() =>
+            toggleWidget("dateAndTimeWidget", "isDateAndTimeActive")
+          }
+        >
           <div className="flex items-center justify-between w-full">
             Toggle clock
             {dateAndTimeWidget.isDateAndTimeActive && (
+              <Check width={16} height={16} />
+            )}
+          </div>
+        </MenubarItem>
+
+        <MenubarSeparator />
+
+        <MenubarItem
+          onClick={() => toggleWidget("bookmarksWidget", "isBookmarksActive")}
+        >
+          <div className="flex items-center justify-between w-full">
+            Toggle bookmarks
+            {bookmarksWidget.isBookmarksActive && (
               <Check width={16} height={16} />
             )}
           </div>

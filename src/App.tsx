@@ -1,12 +1,22 @@
+import BookmarkList from "./components/bookmarks/BookmarkList";
+import CreateBookmarkModal from "./components/bookmarks/CreateBookmarkModal";
 import ControlMenu from "./components/ControlMenu";
 import DateAndTime from "./components/DateAndTime";
 import SearchBar from "./components/SearchBar";
+import useModalStore, { LayoutModal } from "./stores/modal.store";
 import useUIStore from "./stores/ui.store";
 import useWidgetsStore from "./stores/widgets.store";
 
 function App() {
   const { wallpaper, backdrop, isBackdropActive } = useUIStore();
-  const { searchBarWidget, dateAndTimeWidget } = useWidgetsStore();
+  const { searchBarWidget, dateAndTimeWidget, bookmarksWidget } =
+    useWidgetsStore();
+
+  const modalRegistry: Record<LayoutModal, React.ComponentType> = {
+    [LayoutModal.CreateBookmark]: CreateBookmarkModal,
+  };
+
+  const modalState = useModalStore();
 
   return (
     <main
@@ -19,13 +29,21 @@ function App() {
           backdropFilter: `${isBackdropActive ? `blur(${backdrop}px)` : ""}`,
         }}
       ></div>
+
       <section className="z-10 w-full min-h-full overflow-y-hidden">
+        {Object.entries(modalRegistry).map(([modalKey, Component]) => {
+          if (modalState[modalKey as keyof typeof modalRegistry]) {
+            return <Component key={modalKey} />;
+          }
+          return null;
+        })}
         <header className="w-full flex items-center justify-between">
           <ControlMenu />
           {dateAndTimeWidget.isDateAndTimeActive && <DateAndTime />}
         </header>
-        <div className="flex flex-col items-center justify-center h-full w-full">
+        <div className="flex flex-col items-center justify-center h-full w-full gap-4">
           {searchBarWidget.isSearchBarActive && <SearchBar />}
+          {bookmarksWidget.isBookmarksActive && <BookmarkList />}
         </div>
       </section>
     </main>

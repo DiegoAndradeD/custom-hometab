@@ -1,4 +1,5 @@
 import type { TInputVariant } from "../components/ui/input";
+import type { IBookmark } from "./index";
 
 export interface ISearchBarWidget {
   isSearchBarActive: boolean;
@@ -7,4 +8,9 @@ export interface ISearchBarWidget {
 
 export interface IDateAndTimeWidget {
   isDateAndTimeActive: boolean;
+}
+
+export interface IBookmarksWidget {
+  isBookmarksActive: boolean;
+  items: IBookmark[];
 }

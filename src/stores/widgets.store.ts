@@ -1,4 +1,5 @@
 import type {
+  IBookmarksWidget,
   IDateAndTimeWidget,
   ISearchBarWidget,
 } from "../interfaces/widgets";
@@ -7,14 +8,19 @@ import { createPersistedStore } from "../utils";
 interface UIStoreState {
   searchBarWidget: ISearchBarWidget;
   dateAndTimeWidget: IDateAndTimeWidget;
+  bookmarksWidget: IBookmarksWidget;
 }
+
+type WidgetKeys = keyof UIStoreState;
 
 interface UIStoreActions {
-  setSearchBarWidget: (newProps: Partial<ISearchBarWidget>) => void;
-  setDateAndTimeWidget: (newProps: Partial<IDateAndTimeWidget>) => void;
+  updateWidget: <K extends WidgetKeys>(
+    key: K,
+    newProps: Partial<UIStoreState[K]>
+  ) => void;
 }
 
-const widgetsStoreInitialState: UIStoreState = {
+export const widgetsStoreInitialState: UIStoreState = {
   searchBarWidget: {
     isSearchBarActive: true,
     variant: "default",
@@ -22,23 +28,20 @@ const widgetsStoreInitialState: UIStoreState = {
   dateAndTimeWidget: {
     isDateAndTimeActive: true,
   },
+  bookmarksWidget: {
+    isBookmarksActive: true,
+    items: [],
+  },
 };
 
 const useWidgetsStore = createPersistedStore<UIStoreState & UIStoreActions>(
   (set) => ({
     ...widgetsStoreInitialState,
-    setSearchBarWidget: (newProps) => {
+
+    updateWidget: (key, newProps) => {
       set((state) => ({
-        searchBarWidget: {
-          ...state.searchBarWidget,
-          ...newProps,
-        },
-      }));
-    },
-    setDateAndTimeWidget: (newProps) => {
-      set((state) => ({
-        dateAndTimeWidget: {
-          ...state.dateAndTimeWidget,
+        [key]: {
+          ...state[key],
           ...newProps,
         },
       }));
