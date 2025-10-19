@@ -41,9 +41,21 @@ function App() {
           <ControlMenu />
           {dateAndTimeWidget.isDateAndTimeActive && <DateAndTime />}
         </header>
-        <div className="flex flex-col items-center justify-center h-full w-full gap-4">
-          {searchBarWidget.isSearchBarActive && <SearchBar />}
-          {bookmarksWidget.isBookmarksActive && <BookmarkList />}
+        <div className="flex flex-col items-center justify-center h-full w-full gap-6">
+          <div
+            className={
+              searchBarWidget.isSearchBarActive ? "block" : "invisible"
+            }
+          >
+            <SearchBar />
+          </div>
+          <div
+            className={
+              bookmarksWidget.isBookmarksActive ? "block" : "invisible"
+            }
+          >
+            <BookmarkList />
+          </div>
         </div>
       </section>
     </main>

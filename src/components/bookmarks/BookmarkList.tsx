@@ -11,7 +11,7 @@ const BookmarkList = () => {
 
   return (
     <ScrollArea className="w-[750px] rounded-md border-none whitespace-nowrap">
-      <div className="flex w-max items-center gap-6 p-4">
+      <div className="flex w-max items-center gap-2 p-4">
         {bookmarksWidget.items.length > 0 &&
           bookmarksWidget.items.map((bookmark) => (
             <BookmarkCard key={bookmark.url} bookmark={bookmark} />
@@ -20,7 +20,7 @@ const BookmarkList = () => {
           onClick={() => {
             toggleModal(LayoutModal.CreateBookmark);
           }}
-          className="bg-transparent border-none shadow-none flex flex-col !gap-2 p-0 cursor-pointer m-0 max-w-24"
+          className="bg-transparent border-none shadow-none flex flex-col !gap-2 p-4 cursor-pointer m-0 max-w-28 min-h-40"
         >
           <CardHeader className="flex items-center justify-center p-0">
             <div className="w-12 h-12 rounded-full bg-icon-background flex items-center justify-center">

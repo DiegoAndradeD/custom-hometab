@@ -37,7 +37,7 @@ const SearchBar = () => {
           control={form.control}
           name="query"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex !w-fit">
               <FormControl>
                 <Input
                   {...field}
