@@ -46,8 +46,12 @@ const UIControls = () => {
   const { wallpaper, setWallpaper } = useUIStore();
 
   const handleChangeWallpaper = () => {
-    const next = Randomizers.getRandomWallpaper(wallpaper);
-    setWallpaper(next);
+    const nextWallpaperUrl = Randomizers.getRandomWallpaper(wallpaper);
+    const img = new Image();
+    img.src = nextWallpaperUrl;
+    img.onload = () => {
+      setWallpaper(nextWallpaperUrl);
+    };
   };
 
   return (

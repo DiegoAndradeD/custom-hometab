@@ -1,4 +1,5 @@
 // Components
+import { useEffect, useState } from "react";
 import BookmarkList from "./components/bookmarks/BookmarkList";
 import UpsertBookmarkModal from "./components/bookmarks/UpsertBookmarkModal";
 import ControlMenu from "./components/ControlMenu";
@@ -20,18 +21,43 @@ function App() {
 
   const modalState = useModalStore();
 
+  const [currentWallpaper, setCurrentWallpaper] = useState(wallpaper);
+  const [_, setPreviousWallpaper] = useState("");
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    if (wallpaper !== currentWallpaper) {
+      setPreviousWallpaper(currentWallpaper);
+      setCurrentWallpaper(wallpaper);
+      setIsFading(true);
+
+      const timer = setTimeout(() => {
+        setIsFading(false);
+        setPreviousWallpaper("");
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [wallpaper, currentWallpaper]);
+
   return (
     <main
       className="relative flex min-h-screen w-full text-white font-sans p-4 bg-cover bg-center bg-fixed transition-all duration-500"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
       <div
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
+        style={{
+          backgroundImage: `url(${currentWallpaper})`,
+          opacity: isFading ? 0 : 1,
+        }}
+      />
+      <div
         className="absolute inset-0 w-full h-full bg-black/30 z-0"
         style={{
           backdropFilter: `${isBackdropActive ? `blur(${backdrop}px)` : ""}`,
         }}
-      ></div>
-
+      />
       <section className="z-10 w-full min-h-full overflow-y-hidden">
         {Object.entries(modalRegistry).map(([modalKey, Component]) => {
           if (modalState[modalKey as keyof typeof modalRegistry]) {
@@ -43,12 +69,15 @@ function App() {
           <ControlMenu />
           {dateAndTimeWidget.isDateAndTimeActive && <DateAndTime />}
         </header>
-        <div className="flex flex-col items-center justify-center h-full w-full gap-6">
+        <div className="flex flex-col items-center justify-center h-full w-full gap-2">
           <div
             className={
-              searchBarWidget.isSearchBarActive ? "block" : "invisible"
+              searchBarWidget.isSearchBarActive
+                ? "flex flex-col gap-8 items-center"
+                : "invisible"
             }
           >
+            <h1 className="text-8xl font-bold text-shadow-md">Google</h1>
             <SearchBar />
           </div>
           <div
