@@ -1,7 +1,11 @@
+// Utils
 import { z } from "zod";
+// Hooks
 import { useForm } from "react-hook-form";
-
+// Stores
 import useModalStore, { LayoutModal } from "../../stores/modal.store";
+import useWidgetsStore from "../../stores/widgets.store";
+// Components
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -12,7 +16,6 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
-import useWidgetsStore from "../../stores/widgets.store";
 import {
   Form,
   FormControl,
@@ -21,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+// Utils
 import { Validators } from "../../utils";
 
 const bookmarkSchema = z.object({
@@ -33,35 +37,38 @@ const bookmarkSchema = z.object({
 
 type BookmarkFormValues = z.infer<typeof bookmarkSchema>;
 
-const CreateBookmarkModal = () => {
-  const { toggleModal, isCreateBookmarkModalOpen } = useModalStore();
+const UpsertBookmarkModal = () => {
+  const { toggleModal, isUpsertBookmarkModalOpen } = useModalStore();
   const { updateWidget, bookmarksWidget } = useWidgetsStore();
 
   const form = useForm<BookmarkFormValues>({
     defaultValues: {
-      title: "",
-      url: "",
+      title: bookmarksWidget.selectedBookmark?.title ?? "",
+      url: bookmarksWidget.selectedBookmark?.url ?? "",
     },
   });
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = form;
+  const { handleSubmit } = form;
 
   const onSubmit = (data: BookmarkFormValues) => {
-    updateWidget("bookmarksWidget", {
-      items: [...bookmarksWidget.items, data],
-    });
-    toggleModal(LayoutModal.CreateBookmark);
-  };
+    const { selectedBookmark, items } = bookmarksWidget;
 
-  console.log(errors);
+    const newItems = selectedBookmark
+      ? items.map((item) =>
+          item.url === selectedBookmark.url ? { ...item, ...data } : item
+        )
+      : [...items, data];
+
+    updateWidget("bookmarksWidget", {
+      items: newItems,
+    });
+    toggleModal(LayoutModal.UpsertBookmark);
+  };
 
   return (
     <Dialog
-      open={isCreateBookmarkModalOpen}
-      onOpenChange={() => toggleModal(LayoutModal.CreateBookmark)}
+      open={isUpsertBookmarkModalOpen}
+      onOpenChange={() => toggleModal(LayoutModal.UpsertBookmark)}
     >
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
@@ -70,7 +77,9 @@ const CreateBookmarkModal = () => {
             className="flex flex-col gap-4"
           >
             <DialogHeader>
-              <DialogTitle>Create bookmark</DialogTitle>
+              <DialogTitle>{`${
+                bookmarksWidget.selectedBookmark ? "Update" : "Create"
+              } bookmark`}</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4">
               <FormField
@@ -81,6 +90,7 @@ const CreateBookmarkModal = () => {
                     <FormLabel>Title</FormLabel>
                     <FormControl>
                       <Input
+                        className="!border-foreground/80"
                         placeholder="Bookmark title"
                         {...field}
                         variant={"outline"}
@@ -98,6 +108,7 @@ const CreateBookmarkModal = () => {
                     <FormLabel>Url</FormLabel>
                     <FormControl>
                       <Input
+                        className="!border-foreground/80"
                         placeholder="Bookmark URL"
                         {...field}
                         variant={"outline"}
@@ -125,4 +136,4 @@ const CreateBookmarkModal = () => {
   );
 };
 
-export default CreateBookmarkModal;
+export default UpsertBookmarkModal;

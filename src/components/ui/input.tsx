@@ -20,7 +20,7 @@ const inputVariants = cva(
         underline:
           "border-0 !border-b-2 !border-background !rounded-none !bg-transparent focus-visible:!border-b-2",
         outline:
-          "border border-foreground/80 !bg-transparent focus-visible:!border-foreground focus-visible:!border",
+          "border border-background/80 !bg-transparent focus-visible:!border-foreground focus-visible:!border",
       },
     },
     defaultVariants: {
@@ -29,7 +29,11 @@ const inputVariants = cva(
   }
 );
 
-export const INPUT_VARIANT_OPTIONS: TInputVariant[] = ["default", "underline"];
+export const INPUT_VARIANT_OPTIONS: TInputVariant[] = [
+  "default",
+  "underline",
+  "outline",
+];
 
 export type TInputVariant = VariantProps<typeof inputVariants>["variant"];
 

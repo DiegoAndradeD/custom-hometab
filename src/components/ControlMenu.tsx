@@ -1,3 +1,4 @@
+// Components
 import UIControls from "./menu/UIControls";
 import WidgetControls from "./menu/WidgetControls";
 import { Menubar } from "./ui/menubar";

@@ -1,8 +1,12 @@
+// Utils
 import z from "zod";
+// Components
 import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Search } from "lucide-react";
+// Hooks
+import { useForm } from "react-hook-form";
+// Stores
 import useWidgetsStore from "../stores/widgets.store";
 
 const SearchBar = () => {

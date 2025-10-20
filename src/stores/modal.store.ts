@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export enum LayoutModal {
-  CreateBookmark = "isCreateBookmarkModalOpen",
+  UpsertBookmark = "isUpsertBookmarkModalOpen",
 }
 
 type LayoutModalState = Record<LayoutModal, boolean>;

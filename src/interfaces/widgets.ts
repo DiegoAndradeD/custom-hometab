@@ -13,4 +13,5 @@ export interface IDateAndTimeWidget {
 export interface IBookmarksWidget {
   isBookmarksActive: boolean;
   items: IBookmark[];
+  selectedBookmark?: IBookmark;
 }

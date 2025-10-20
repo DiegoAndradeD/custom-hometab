@@ -31,6 +31,7 @@ export const widgetsStoreInitialState: UIStoreState = {
   bookmarksWidget: {
     isBookmarksActive: true,
     items: [],
+    selectedBookmark: undefined,
   },
 };
 

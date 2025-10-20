@@ -1,8 +1,10 @@
+// Components
 import BookmarkList from "./components/bookmarks/BookmarkList";
-import CreateBookmarkModal from "./components/bookmarks/CreateBookmarkModal";
+import UpsertBookmarkModal from "./components/bookmarks/UpsertBookmarkModal";
 import ControlMenu from "./components/ControlMenu";
 import DateAndTime from "./components/DateAndTime";
 import SearchBar from "./components/SearchBar";
+// Stores
 import useModalStore, { LayoutModal } from "./stores/modal.store";
 import useUIStore from "./stores/ui.store";
 import useWidgetsStore from "./stores/widgets.store";
@@ -13,7 +15,7 @@ function App() {
     useWidgetsStore();
 
   const modalRegistry: Record<LayoutModal, React.ComponentType> = {
-    [LayoutModal.CreateBookmark]: CreateBookmarkModal,
+    [LayoutModal.UpsertBookmark]: UpsertBookmarkModal,
   };
 
   const modalState = useModalStore();
