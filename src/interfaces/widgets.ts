@@ -1,4 +1,5 @@
 import type { TInputVariant } from "../components/ui/input";
+import type { DateTimeVariant } from "../enums";
 import type { IBookmark } from "./index";
 
 export interface ISearchBarWidget {
@@ -8,6 +9,7 @@ export interface ISearchBarWidget {
 
 export interface IDateAndTimeWidget {
   isDateAndTimeActive: boolean;
+  variant: DateTimeVariant;
 }
 
 export interface IBookmarksWidget {

@@ -1,3 +1,4 @@
+import { DateTimeVariant } from "../enums";
 import type {
   IBookmarksWidget,
   IDateAndTimeWidget,
@@ -27,6 +28,7 @@ export const widgetsStoreInitialState: UIStoreState = {
   },
   dateAndTimeWidget: {
     isDateAndTimeActive: true,
+    variant: DateTimeVariant.DATETIME_WITH_SECONDS,
   },
   bookmarksWidget: {
     isBookmarksActive: true,

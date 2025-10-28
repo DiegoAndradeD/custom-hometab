@@ -3,9 +3,19 @@ import { useEffect, useState } from "react";
 // Components
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Calendar } from "./ui/calendar";
+// Data
+import { DATE_TIME_FORMAT_OPTIONS } from "../data/date-time-format-options.data";
+// Stores
+import useWidgetsStore from "../stores/widgets.store";
 
 const DateAndTime = () => {
+  const { dateAndTimeWidget } = useWidgetsStore();
   const [time, setTime] = useState<Date>(new Date());
+
+  const formatter = new Intl.DateTimeFormat(
+    "en-US",
+    DATE_TIME_FORMAT_OPTIONS[dateAndTimeWidget.variant]
+  );
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -15,12 +25,7 @@ const DateAndTime = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  const formattedTime = time.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: true,
-  });
+  const formattedTime = formatter.format(time);
 
   return (
     <HoverCard openDelay={10} closeDelay={10}>

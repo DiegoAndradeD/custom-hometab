@@ -1,3 +1,4 @@
+// Components
 import { Check, Settings } from "lucide-react";
 import {
   MenubarContent,
@@ -9,11 +10,24 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "../ui/menubar";
-
+// Stores
 import useWidgetsStore, {
   widgetsStoreInitialState,
 } from "../../stores/widgets.store";
+// Data
 import { INPUT_VARIANT_OPTIONS } from "../ui/input";
+// Utils
+import { Formatters } from "../../utils";
+// Enums
+import {
+  DateTimeVariant,
+  DateTimeVariantStringRepresentation,
+} from "../../enums";
+
+const DATE_TIME_VARIANT_OPTIONS = Formatters.createEnumMap(
+  DateTimeVariant,
+  DateTimeVariantStringRepresentation
+);
 
 const WidgetControls = () => {
   const { searchBarWidget, dateAndTimeWidget, bookmarksWidget, updateWidget } =
@@ -78,18 +92,41 @@ const WidgetControls = () => {
 
         <MenubarSeparator />
 
-        <MenubarItem
-          onClick={() =>
-            toggleWidget("dateAndTimeWidget", "isDateAndTimeActive")
-          }
-        >
-          <div className="flex items-center justify-between w-full">
-            Toggle clock
-            {dateAndTimeWidget.isDateAndTimeActive && (
-              <Check width={16} height={16} />
-            )}
-          </div>
-        </MenubarItem>
+        <MenubarSub>
+          <MenubarSubTrigger>Clock</MenubarSubTrigger>
+          <MenubarSubContent>
+            <MenubarItem
+              onClick={() =>
+                toggleWidget("dateAndTimeWidget", "isDateAndTimeActive")
+              }
+            >
+              <div className="flex items-center justify-between w-full">
+                Toggle clock
+                {dateAndTimeWidget.isDateAndTimeActive && (
+                  <Check width={16} height={16} />
+                )}
+              </div>
+            </MenubarItem>
+
+            <MenubarSeparator />
+
+            {DATE_TIME_VARIANT_OPTIONS.map((variant) => (
+              <MenubarItem
+                key={variant.value}
+                onClick={() => {
+                  updateWidget("dateAndTimeWidget", { variant: variant.value });
+                }}
+              >
+                <div className="flex items-center justify-between w-full">
+                  {variant.label}
+                  {dateAndTimeWidget.variant === variant.value && (
+                    <Check width={16} height={16} />
+                  )}
+                </div>
+              </MenubarItem>
+            ))}
+          </MenubarSubContent>
+        </MenubarSub>
 
         <MenubarSeparator />
 

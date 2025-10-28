@@ -1,6 +1,32 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type TTheme = "dark" | "light" | "system";
+export type TTheme =
+  | "dark"
+  | "light"
+  | "system"
+  | "catppuccin"
+  | "dracula"
+  | "nord"
+  | "tokyo-night"
+  | "gruvbox"
+  | "one-dark"
+  | "solarized"
+  | "material"
+  | "monokai";
+export const themes: TTheme[] = [
+  "light",
+  "dark",
+  "system",
+  "catppuccin",
+  "dracula",
+  "nord",
+  "tokyo-night",
+  "gruvbox",
+  "one-dark",
+  "solarized",
+  "material",
+  "monokai",
+];
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -24,40 +50,40 @@ export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "vite-ui-theme",
-  ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<TTheme>(
+  const [theme, setThemeState] = useState<TTheme>(
     () => (localStorage.getItem(storageKey) as TTheme) || defaultTheme
   );
 
-  useEffect(() => {
-    const root = window.document.documentElement;
+  const applyTheme = (theme: TTheme) => {
+    const root = document.documentElement;
 
-    root.classList.remove("light", "dark");
+    themes.forEach((t) => root.classList.remove(t));
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
-
       root.classList.add(systemTheme);
       return;
     }
 
     root.classList.add(theme);
+  };
+
+  useEffect(() => {
+    applyTheme(theme);
   }, [theme]);
 
-  const value = {
-    theme,
-    setTheme: (theme: TTheme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
+  const setTheme = (newTheme: TTheme) => {
+    localStorage.setItem(storageKey, newTheme);
+    setThemeState(newTheme);
+    applyTheme(newTheme);
   };
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeProviderContext.Provider>
   );
@@ -65,9 +91,6 @@ export function ThemeProvider({
 
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext);
-
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
-
+  if (!context) throw new Error("useTheme must be used within a ThemeProvider");
   return context;
 };

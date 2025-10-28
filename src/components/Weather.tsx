@@ -1,7 +1,7 @@
+// Hooks
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, type JSX } from "react";
-import LocationService from "../services/location.service";
-import WeatherService from "../services/weatther.service";
+// Components
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import {
   Item,
@@ -17,8 +17,12 @@ import {
   WiDaySunnyOvercast,
   WiHumidity,
 } from "react-icons/wi";
-import type { WeatherResponse } from "../interfaces/weather";
 import { Separator } from "./ui/separator";
+import { Spinner } from "./ui/spinner";
+// Interfaces
+import type { WeatherResponse } from "../interfaces/weather";
+// Services
+import { LocationService, WeatherService } from "../services";
 
 interface WeatherIcon {
   icon: JSX.Element;
@@ -120,15 +124,16 @@ const Weather = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-background px-4 py-1 rounded-2xl text-sm h-7 flex items-center justify-center text-muted-foreground animate-pulse">
-        Loading...
+      <div className="bg-background px-4 py-1 rounded-2xl text-sm h-7 flex gap-1 items-center justify-center text-muted-foreground animate-pulse">
+        <span>Fetching weather data</span>
+        <Spinner />
       </div>
     );
   }
 
   if (hasError) {
     return (
-      <div className="bg-destructive/10 px-4 py-1 rounded-2xl text-sm h-7 flex items-center justify-center text-destructive">
+      <div className="bg-background px-4 py-1 rounded-2xl text-sm h-7 flex items-center justify-center text-destructive">
         Error fetching data
       </div>
     );
@@ -146,7 +151,7 @@ const Weather = () => {
     <HoverCard openDelay={100} closeDelay={100}>
       <HoverCardTrigger asChild>
         <button
-          className="bg-background px-4 py-1 rounded-2xl text-sm h-7 flex items-center justify-center text-foreground hover:bg-accent transition-colors cursor-pointer"
+          className="bg-background px-4 py-1 rounded-2xl text-sm h-7 flex items-center justify-center text-foreground cursor-pointer"
           aria-label={`Clima em ${city}: ${weatherInfo.temp} graus Celsius, ${weatherInfo.label}`}
         >
           {city}: {weatherInfo.temp}°C

@@ -13,7 +13,7 @@ import {
 } from "../ui/menubar";
 import { Image as ImageIcon } from "lucide-react";
 // Hooks
-import { useTheme } from "../providers/ThemeProvider";
+import { themes, useTheme } from "../providers/ThemeProvider";
 // Stores
 import useUIStore from "../../stores/ui.store";
 // Data
@@ -21,7 +21,6 @@ import { allWallpapers } from "../../data/wallpapers.data";
 
 const ThemeOptions = () => {
   const { setTheme, theme } = useTheme();
-  const themes = ["Light", "Dark", "System"];
 
   return (
     <>
@@ -32,7 +31,7 @@ const ThemeOptions = () => {
             key={themeValue}
             onClick={() => setTheme(themeValue as any)}
           >
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-full capitalize">
               {themeName}
               {theme === themeValue && <Check width={16} height={16} />}
             </div>
@@ -68,7 +67,7 @@ const UIControls = () => {
 
   return (
     <MenubarMenu>
-      <MenubarTrigger className="text-foreground !cursor-pointer p-0">
+      <MenubarTrigger className="text-foreground !cursor-pointer p-0 bg-transparent hover:bg-transparent">
         <ImageIcon width={16} height={16} />
       </MenubarTrigger>
       <MenubarContent>
@@ -78,7 +77,7 @@ const UIControls = () => {
         <MenubarSeparator />
         <MenubarSub>
           <MenubarSubTrigger>Change Theme</MenubarSubTrigger>
-          <MenubarSubContent>
+          <MenubarSubContent className="h-60 overflow-y-auto ">
             <ThemeOptions />
           </MenubarSubContent>
         </MenubarSub>
