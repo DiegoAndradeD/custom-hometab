@@ -24,10 +24,13 @@ const DateAndTime = () => {
 
   return (
     <HoverCard openDelay={10} closeDelay={10}>
-      <HoverCardTrigger className="bg-background/40 px-4 py-1 rounded-md">
+      <HoverCardTrigger
+        className="bg-background px-4 py-1 rounded-2xl text-sm !h-7 !min-h-7 !max-h-7 flex items-center
+      justify-center text-foreground"
+      >
         {formattedTime}
       </HoverCardTrigger>
-      <HoverCardContent align="end" className="w-fit">
+      <HoverCardContent align="center" className="w-fit">
         <Calendar
           mode="single"
           className="rounded-lg border-none bg-transparent"

@@ -148,3 +148,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+::placeholder {
+  color: #ffffff;
+  font-weight: bold
+}

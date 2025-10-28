@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Settings } from "lucide-react";
 import {
   MenubarContent,
   MenubarItem,
@@ -38,8 +38,8 @@ const WidgetControls = () => {
 
   return (
     <MenubarMenu>
-      <MenubarTrigger className="text-foreground !cursor-pointer">
-        WIDGETS
+      <MenubarTrigger className="text-foreground !cursor-pointer p-0">
+        <Settings width={16} height={16} />
       </MenubarTrigger>
       <MenubarContent>
         <MenubarSub>

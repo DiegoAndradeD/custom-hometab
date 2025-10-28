@@ -46,7 +46,7 @@ const SearchBar = () => {
                 <Input
                   {...field}
                   variant={searchBarWidget.variant}
-                  className="md:w-[750px] md:h-14 rounded-4xl !text-lg !pl-6"
+                  className="md:w-[750px] md:h-14 rounded-4xl !text-lg !pl-6 font-bold"
                   placeholder="Search in Google or type an URL"
                   endContent={
                     <div className="bg-icon-background rounded-full p-2">

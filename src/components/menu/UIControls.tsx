@@ -11,12 +11,13 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "../ui/menubar";
+import { Image as ImageIcon } from "lucide-react";
 // Hooks
 import { useTheme } from "../providers/ThemeProvider";
 // Stores
 import useUIStore from "../../stores/ui.store";
-// Utils
-import { Randomizers } from "../../utils";
+// Data
+import { allWallpapers } from "../../data/wallpapers.data";
 
 const ThemeOptions = () => {
   const { setTheme, theme } = useTheme();
@@ -45,8 +46,19 @@ const ThemeOptions = () => {
 const UIControls = () => {
   const { wallpaper, setWallpaper } = useUIStore();
 
+  const getNextWallpaper = (current: string): string => {
+    const currentIndex = allWallpapers.indexOf(current);
+    let nextIndex = currentIndex + 1;
+
+    if (nextIndex >= allWallpapers.length) {
+      nextIndex = 0;
+    }
+
+    return allWallpapers[nextIndex];
+  };
+
   const handleChangeWallpaper = () => {
-    const nextWallpaperUrl = Randomizers.getRandomWallpaper(wallpaper);
+    const nextWallpaperUrl = getNextWallpaper(wallpaper);
     const img = new Image();
     img.src = nextWallpaperUrl;
     img.onload = () => {
@@ -56,8 +68,8 @@ const UIControls = () => {
 
   return (
     <MenubarMenu>
-      <MenubarTrigger className="text-foreground !cursor-pointer">
-        UI
+      <MenubarTrigger className="text-foreground !cursor-pointer p-0">
+        <ImageIcon width={16} height={16} />
       </MenubarTrigger>
       <MenubarContent>
         <MenubarItem onClick={handleChangeWallpaper}>

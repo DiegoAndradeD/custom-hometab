@@ -9,6 +9,7 @@ import SearchBar from "./components/SearchBar";
 import useModalStore, { LayoutModal } from "./stores/modal.store";
 import useUIStore from "./stores/ui.store";
 import useWidgetsStore from "./stores/widgets.store";
+import Weather from "./components/Weather";
 
 function App() {
   const { wallpaper, backdrop, isBackdropActive } = useUIStore();
@@ -65,9 +66,16 @@ function App() {
           }
           return null;
         })}
-        <header className="w-full flex items-center justify-between">
-          <ControlMenu />
-          {dateAndTimeWidget.isDateAndTimeActive && <DateAndTime />}
+        <header className="w-full flex items-center">
+          <div className="flex-1 flex justify-start gap-1">
+            <ControlMenu />
+            <Weather />
+          </div>
+          {dateAndTimeWidget.isDateAndTimeActive && (
+            <div className="flex justify-center">
+              <DateAndTime />
+            </div>
+          )}
         </header>
         <div className="flex flex-col items-center justify-center h-full w-full gap-2">
           <div

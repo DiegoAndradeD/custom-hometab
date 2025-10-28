@@ -1,0 +1,5 @@
+export const allWallpapers: string[] = [
+  "/wallpaper1.jpg",
+  "/wallpaper2.jpg",
+  "/wallpaper3.jpg",
+];
