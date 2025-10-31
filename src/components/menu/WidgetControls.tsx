@@ -1,8 +1,7 @@
 // Components
-import { Check, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import {
   MenubarContent,
-  MenubarItem,
   MenubarMenu,
   MenubarSeparator,
   MenubarSub,
@@ -10,10 +9,10 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "../ui/menubar";
+import WidgetToggleItem from "./WidgetToggleItem";
+import WidgetVariantSelector from "./WidgetVariantSelector";
 // Stores
-import useWidgetsStore, {
-  widgetsStoreInitialState,
-} from "../../stores/widgets.store";
+import useWidgetsStore from "../../stores/widgets.store";
 // Data
 import { INPUT_VARIANT_OPTIONS } from "../ui/input";
 // Utils
@@ -30,36 +29,8 @@ const DATE_TIME_VARIANT_OPTIONS = Formatters.createEnumMap(
 );
 
 const WidgetControls = () => {
-  const {
-    searchBarWidget,
-    dateAndTimeWidget,
-    bookmarksWidget,
-    stickyNotesWidget,
-    newsFeedWidget,
-    updateWidget,
-  } = useWidgetsStore();
-
-  const toggleWidget = <
-    K extends
-      | "searchBarWidget"
-      | "dateAndTimeWidget"
-      | "bookmarksWidget"
-      | "stickyNotesWidget"
-      | "newsFeedWidget"
-  >(
-    key: K,
-    prop: keyof (typeof widgetsStoreInitialState)[K]
-  ) => {
-    updateWidget(key, {
-      [prop]: !useWidgetsStore.getState()[key][prop],
-    } as any);
-  };
-
-  const handleSearchBarVariantChange = (
-    variant: (typeof INPUT_VARIANT_OPTIONS)[number]
-  ) => {
-    updateWidget("searchBarWidget", { variant });
-  };
+  const { searchBarWidget, dateAndTimeWidget, bookmarksWidget } =
+    useWidgetsStore();
 
   return (
     <MenubarMenu>
@@ -70,34 +41,20 @@ const WidgetControls = () => {
         <MenubarSub>
           <MenubarSubTrigger>Search Bar</MenubarSubTrigger>
           <MenubarSubContent>
-            <MenubarItem
-              onClick={() =>
-                toggleWidget("searchBarWidget", "isSearchBarActive")
-              }
-            >
-              <div className="flex items-center justify-between w-full">
-                Search Bar
-                {searchBarWidget.isSearchBarActive && (
-                  <Check width={16} height={16} />
-                )}
-              </div>
-            </MenubarItem>
+            <WidgetToggleItem
+              label="Search Bar"
+              widgetKey="searchBarWidget"
+              toggleProperty="isSearchBarActive"
+              isActive={searchBarWidget.isSearchBarActive}
+            />
 
             <MenubarSeparator />
 
-            {INPUT_VARIANT_OPTIONS.map((variant) => (
-              <MenubarItem
-                key={variant}
-                onClick={() => handleSearchBarVariantChange(variant)}
-              >
-                <div className="flex items-center justify-between w-full">
-                  {variant}
-                  {searchBarWidget.variant === variant && (
-                    <Check width={16} height={16} />
-                  )}
-                </div>
-              </MenubarItem>
-            ))}
+            <WidgetVariantSelector
+              widgetKey="searchBarWidget"
+              currentVariant={searchBarWidget.variant}
+              options={INPUT_VARIANT_OPTIONS}
+            />
           </MenubarSubContent>
         </MenubarSub>
 
@@ -106,79 +63,31 @@ const WidgetControls = () => {
         <MenubarSub>
           <MenubarSubTrigger>Clock</MenubarSubTrigger>
           <MenubarSubContent>
-            <MenubarItem
-              onClick={() =>
-                toggleWidget("dateAndTimeWidget", "isDateAndTimeActive")
-              }
-            >
-              <div className="flex items-center justify-between w-full">
-                Toggle clock
-                {dateAndTimeWidget.isDateAndTimeActive && (
-                  <Check width={16} height={16} />
-                )}
-              </div>
-            </MenubarItem>
+            <WidgetToggleItem
+              label="Toggle clock"
+              widgetKey="dateAndTimeWidget"
+              toggleProperty="isDateAndTimeActive"
+              isActive={dateAndTimeWidget.isDateAndTimeActive}
+            />
 
             <MenubarSeparator />
 
-            {DATE_TIME_VARIANT_OPTIONS.map((variant) => (
-              <MenubarItem
-                key={variant.value}
-                onClick={() => {
-                  updateWidget("dateAndTimeWidget", { variant: variant.value });
-                }}
-              >
-                <div className="flex items-center justify-between w-full">
-                  {variant.label}
-                  {dateAndTimeWidget.variant === variant.value && (
-                    <Check width={16} height={16} />
-                  )}
-                </div>
-              </MenubarItem>
-            ))}
+            <WidgetVariantSelector
+              widgetKey="dateAndTimeWidget"
+              currentVariant={dateAndTimeWidget.variant}
+              options={DATE_TIME_VARIANT_OPTIONS}
+            />
           </MenubarSubContent>
         </MenubarSub>
 
         <MenubarSeparator />
 
-        <MenubarItem
-          onClick={() => toggleWidget("bookmarksWidget", "isBookmarksActive")}
-        >
-          <div className="flex items-center justify-between w-full">
-            Bookmarks
-            {bookmarksWidget.isBookmarksActive && (
-              <Check width={16} height={16} />
-            )}
-          </div>
-        </MenubarItem>
-
-        <MenubarSeparator />
-
-        <MenubarItem
-          onClick={() =>
-            toggleWidget("stickyNotesWidget", "isStickyNotesActive")
-          }
-        >
-          <div className="flex items-center justify-between w-full">
-            Sticky Notes
-            {stickyNotesWidget.isStickyNotesActive && (
-              <Check width={16} height={16} />
-            )}
-          </div>
-        </MenubarItem>
-
-        <MenubarSeparator />
-
-        <MenubarItem
-          onClick={() => toggleWidget("newsFeedWidget", "isNewsFeedActive")}
-        >
-          <div className="flex items-center justify-between w-full">
-            News Feed
-            {newsFeedWidget.isNewsFeedActive && (
-              <Check width={16} height={16} />
-            )}
-          </div>
-        </MenubarItem>
+        <WidgetToggleItem
+          label="Toggle bookmarks"
+          widgetKey="bookmarksWidget"
+          toggleProperty="isBookmarksActive"
+          isActive={bookmarksWidget.isBookmarksActive}
+        />
       </MenubarContent>
     </MenubarMenu>
   );

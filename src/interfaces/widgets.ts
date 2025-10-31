@@ -26,3 +26,7 @@ export interface IStickyNotesWidget {
 export interface INewsFeedWidget {
   isNewsFeedActive: boolean;
 }
+
+export interface IWeatherWidget {
+  isWeatherWidgetActive: boolean;
+}

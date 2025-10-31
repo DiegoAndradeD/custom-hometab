@@ -5,6 +5,7 @@ import type {
   INewsFeedWidget,
   ISearchBarWidget,
   IStickyNotesWidget,
+  IWeatherWidget,
 } from "../interfaces/widgets";
 import { createPersistedStore } from "../utils";
 
@@ -14,9 +15,10 @@ interface UIStoreState {
   bookmarksWidget: IBookmarksWidget;
   stickyNotesWidget: IStickyNotesWidget;
   newsFeedWidget: INewsFeedWidget;
+  weatherWidget: IWeatherWidget;
 }
 
-type WidgetKeys = keyof UIStoreState;
+export type WidgetKeys = keyof UIStoreState;
 
 interface UIStoreActions {
   updateWidget: <K extends WidgetKeys>(
@@ -45,6 +47,9 @@ export const widgetsStoreInitialState: UIStoreState = {
   },
   newsFeedWidget: {
     isNewsFeedActive: false,
+  },
+  weatherWidget: {
+    isWeatherWidgetActive: false,
   },
 };
 

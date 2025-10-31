@@ -21,6 +21,7 @@ function App() {
     bookmarksWidget,
     stickyNotesWidget,
     newsFeedWidget,
+    weatherWidget,
   } = useWidgetsStore();
 
   const modalRegistry: Record<LayoutModal, React.ComponentType> = {
@@ -32,32 +33,48 @@ function App() {
   const [currentWallpaper, setCurrentWallpaper] = useState(wallpaper);
   const [_, setPreviousWallpaper] = useState("");
   const [isFading, setIsFading] = useState(false);
+  const [isWallpaperLoaded, setIsWallpaperLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!wallpaper) {
+      setIsWallpaperLoaded(true);
+      return;
+    }
+    const img = new Image();
+    img.src = wallpaper;
+    img.onload = () => {
+      setIsWallpaperLoaded(true);
+    };
+    img.onerror = () => {
+      setIsWallpaperLoaded(true);
+    };
+  }, []);
 
   useEffect(() => {
     if (wallpaper !== currentWallpaper) {
       setPreviousWallpaper(currentWallpaper);
-      setCurrentWallpaper(wallpaper);
-      setIsFading(true);
 
-      const timer = setTimeout(() => {
-        setIsFading(false);
-        setPreviousWallpaper("");
-      }, 500);
+      const img = new Image();
+      img.src = wallpaper;
+      img.onload = () => {
+        setCurrentWallpaper(wallpaper);
+        setIsFading(true);
 
-      return () => clearTimeout(timer);
+        setTimeout(() => {
+          setIsFading(false);
+          setPreviousWallpaper("");
+        }, 500);
+      };
     }
   }, [wallpaper, currentWallpaper]);
 
   return (
-    <main
-      className="relative flex min-h-screen w-full text-white font-sans p-4 bg-cover bg-center bg-fixed transition-all duration-500"
-      style={{ backgroundImage: `url(${wallpaper})` }}
-    >
+    <main className="relative flex min-h-screen w-full text-white font-sans p-4 bg-cover bg-center bg-fixed transition-all duration-500 bg-black">
       <div
         className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
         style={{
           backgroundImage: `url(${currentWallpaper})`,
-          opacity: isFading ? 0 : 1,
+          opacity: isWallpaperLoaded ? (isFading ? 0 : 1) : 0,
         }}
       />
       <div
@@ -76,7 +93,7 @@ function App() {
         <header className="w-full flex items-center">
           <div className="flex-1 flex justify-start gap-1">
             <ControlMenu />
-            <Weather />
+            {weatherWidget.isWeatherWidgetActive && <Weather />}
           </div>
           <div className="flex justify-start gap-1">
             {stickyNotesWidget.isStickyNotesActive && <StickyNotes />}
