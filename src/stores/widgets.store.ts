@@ -3,6 +3,7 @@ import type {
   IBookmarksWidget,
   IDateAndTimeWidget,
   ISearchBarWidget,
+  IStickyNotesWidget,
 } from "../interfaces/widgets";
 import { createPersistedStore } from "../utils";
 
@@ -10,6 +11,7 @@ interface UIStoreState {
   searchBarWidget: ISearchBarWidget;
   dateAndTimeWidget: IDateAndTimeWidget;
   bookmarksWidget: IBookmarksWidget;
+  stickyNotesWidget: IStickyNotesWidget;
 }
 
 type WidgetKeys = keyof UIStoreState;
@@ -35,6 +37,10 @@ export const widgetsStoreInitialState: UIStoreState = {
     items: [],
     selectedBookmark: undefined,
   },
+  stickyNotesWidget: {
+    isStickyNotesActive: false,
+    notes: [],
+  },
 };
 
 const useWidgetsStore = createPersistedStore<UIStoreState & UIStoreActions>(
@@ -50,7 +56,7 @@ const useWidgetsStore = createPersistedStore<UIStoreState & UIStoreActions>(
       }));
     },
   }),
-  "ui-storage"
+  "widget-storage"
 );
 
 export default useWidgetsStore;

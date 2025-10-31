@@ -31,7 +31,7 @@ const DateAndTime = () => {
     <HoverCard openDelay={10} closeDelay={10}>
       <HoverCardTrigger
         className="bg-background px-4 py-1 rounded-2xl text-sm !h-7 !min-h-7 !max-h-7 flex items-center
-      justify-center text-foreground"
+      justify-center text-foreground w-52"
       >
         {formattedTime}
       </HoverCardTrigger>

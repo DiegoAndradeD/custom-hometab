@@ -760,3 +760,47 @@ body {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+.ProseMirror {
+  min-height: 200px;
+  padding-right: 24px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 4px;
+  border-radius: 4px;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+
+.toolbar-button {
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color: transparent;
+  color: rgb(161 161 170);
+  transition: all 150ms ease;
+}
+
+.toolbar-button:hover {
+  background-color: rgb(39 39 42 / 0.5);
+  color: rgb(244 244 245);
+}
+
+.toolbar-button.is-active {
+  background-color: rgb(96 165 250 / 0.2);
+  color: rgb(96 165 250);
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  list-style: revert;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.ProseMirror li {
+  display: list-item;
+}

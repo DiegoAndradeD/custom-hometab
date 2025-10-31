@@ -5,16 +5,21 @@ import UpsertBookmarkModal from "./components/bookmarks/UpsertBookmarkModal";
 import ControlMenu from "./components/ControlMenu";
 import DateAndTime from "./components/DateAndTime";
 import SearchBar from "./components/SearchBar";
+import Weather from "./components/Weather";
+import StickyNotes from "./components/stickyNotes/StickyNotes";
 // Stores
 import useModalStore, { LayoutModal } from "./stores/modal.store";
 import useUIStore from "./stores/ui.store";
 import useWidgetsStore from "./stores/widgets.store";
-import Weather from "./components/Weather";
 
 function App() {
   const { wallpaper, backdrop, isBackdropActive } = useUIStore();
-  const { searchBarWidget, dateAndTimeWidget, bookmarksWidget } =
-    useWidgetsStore();
+  const {
+    searchBarWidget,
+    dateAndTimeWidget,
+    bookmarksWidget,
+    stickyNotesWidget,
+  } = useWidgetsStore();
 
   const modalRegistry: Record<LayoutModal, React.ComponentType> = {
     [LayoutModal.UpsertBookmark]: UpsertBookmarkModal,
@@ -71,13 +76,16 @@ function App() {
             <ControlMenu />
             <Weather />
           </div>
-          {dateAndTimeWidget.isDateAndTimeActive && (
-            <div className="flex justify-center">
-              <DateAndTime />
-            </div>
-          )}
+          <div className="flex justify-start gap-1">
+            {stickyNotesWidget.isStickyNotesActive && <StickyNotes />}
+            {dateAndTimeWidget.isDateAndTimeActive && (
+              <div className="flex justify-center">
+                <DateAndTime />
+              </div>
+            )}
+          </div>
         </header>
-        <div className="flex flex-col items-center justify-center h-full w-full gap-2">
+        <div className="flex flex-col items-center justify-center h-full w-full gap-2 relative">
           <div
             className={
               searchBarWidget.isSearchBarActive

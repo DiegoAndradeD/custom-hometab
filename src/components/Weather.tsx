@@ -20,7 +20,7 @@ import {
 import { Separator } from "./ui/separator";
 import { Spinner } from "./ui/spinner";
 // Interfaces
-import type { WeatherResponse } from "../interfaces/weather";
+import type { IWeatherResponse } from "../interfaces/weather";
 // Services
 import { LocationService, WeatherService } from "../services";
 
@@ -94,7 +94,7 @@ const Weather = () => {
     data: weatherData,
     isLoading: weatherLoading,
     error: weatherError,
-  } = useQuery<WeatherResponse>({
+  } = useQuery<IWeatherResponse>({
     queryKey: ["weather", city],
     queryFn: () => WeatherService.getWeather(city!),
     enabled: !!city,

@@ -1,9 +1,9 @@
 import axios from "axios";
-import type { WeatherResponse } from "../interfaces/weather";
+import type { IWeatherResponse } from "../interfaces/weather";
 
 class WeatherService {
-  static async getWeather(city: string): Promise<WeatherResponse> {
-    const { data } = await axios.get<WeatherResponse>(
+  static async getWeather(city: string): Promise<IWeatherResponse> {
+    const { data } = await axios.get<IWeatherResponse>(
       `https://wttr.in/${city}?format=j1`
     );
     return data;

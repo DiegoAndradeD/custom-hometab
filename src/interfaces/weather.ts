@@ -1,14 +1,14 @@
-export interface WeatherDescription {
+export interface IWeatherDescription {
   value: string;
 }
 
-export interface CurrentCondition {
+export interface ICurrentCondition {
   temp_C: string;
   FeelsLikeC: string;
-  weatherDesc: WeatherDescription[];
+  weatherDesc: IWeatherDescription[];
   humidity: string;
 }
 
-export interface WeatherResponse {
-  current_condition: CurrentCondition[];
+export interface IWeatherResponse {
+  current_condition: ICurrentCondition[];
 }

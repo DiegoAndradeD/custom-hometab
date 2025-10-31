@@ -30,11 +30,20 @@ const DATE_TIME_VARIANT_OPTIONS = Formatters.createEnumMap(
 );
 
 const WidgetControls = () => {
-  const { searchBarWidget, dateAndTimeWidget, bookmarksWidget, updateWidget } =
-    useWidgetsStore();
+  const {
+    searchBarWidget,
+    dateAndTimeWidget,
+    bookmarksWidget,
+    stickyNotesWidget,
+    updateWidget,
+  } = useWidgetsStore();
 
   const toggleWidget = <
-    K extends "searchBarWidget" | "dateAndTimeWidget" | "bookmarksWidget"
+    K extends
+      | "searchBarWidget"
+      | "dateAndTimeWidget"
+      | "bookmarksWidget"
+      | "stickyNotesWidget"
   >(
     key: K,
     prop: keyof (typeof widgetsStoreInitialState)[K]
@@ -134,8 +143,23 @@ const WidgetControls = () => {
           onClick={() => toggleWidget("bookmarksWidget", "isBookmarksActive")}
         >
           <div className="flex items-center justify-between w-full">
-            Toggle bookmarks
+            Bookmarks
             {bookmarksWidget.isBookmarksActive && (
+              <Check width={16} height={16} />
+            )}
+          </div>
+        </MenubarItem>
+
+        <MenubarSeparator />
+
+        <MenubarItem
+          onClick={() =>
+            toggleWidget("stickyNotesWidget", "isStickyNotesActive")
+          }
+        >
+          <div className="flex items-center justify-between w-full">
+            Sticky Notes
+            {stickyNotesWidget.isStickyNotesActive && (
               <Check width={16} height={16} />
             )}
           </div>
