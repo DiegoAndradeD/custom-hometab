@@ -29,8 +29,14 @@ const DATE_TIME_VARIANT_OPTIONS = Formatters.createEnumMap(
 );
 
 const WidgetControls = () => {
-  const { searchBarWidget, dateAndTimeWidget, bookmarksWidget } =
-    useWidgetsStore();
+  const {
+    searchBarWidget,
+    dateAndTimeWidget,
+    bookmarksWidget,
+    stickyNotesWidget,
+    newsFeedWidget,
+    weatherWidget,
+  } = useWidgetsStore();
 
   return (
     <MenubarMenu>
@@ -47,9 +53,7 @@ const WidgetControls = () => {
               toggleProperty="isSearchBarActive"
               isActive={searchBarWidget.isSearchBarActive}
             />
-
             <MenubarSeparator />
-
             <WidgetVariantSelector
               widgetKey="searchBarWidget"
               currentVariant={searchBarWidget.variant}
@@ -69,9 +73,7 @@ const WidgetControls = () => {
               toggleProperty="isDateAndTimeActive"
               isActive={dateAndTimeWidget.isDateAndTimeActive}
             />
-
             <MenubarSeparator />
-
             <WidgetVariantSelector
               widgetKey="dateAndTimeWidget"
               currentVariant={dateAndTimeWidget.variant}
@@ -83,10 +85,37 @@ const WidgetControls = () => {
         <MenubarSeparator />
 
         <WidgetToggleItem
-          label="Toggle bookmarks"
+          label="Bookmarks"
           widgetKey="bookmarksWidget"
           toggleProperty="isBookmarksActive"
           isActive={bookmarksWidget.isBookmarksActive}
+        />
+
+        <MenubarSeparator />
+
+        <WidgetToggleItem
+          label="Sticky Notes"
+          widgetKey="stickyNotesWidget"
+          toggleProperty="isStickyNotesActive"
+          isActive={stickyNotesWidget.isStickyNotesActive}
+        />
+
+        <MenubarSeparator />
+
+        <WidgetToggleItem
+          label="News Feed"
+          widgetKey="newsFeedWidget"
+          toggleProperty="isNewsFeedActive"
+          isActive={newsFeedWidget.isNewsFeedActive}
+        />
+
+        <MenubarSeparator />
+
+        <WidgetToggleItem
+          label="Weather"
+          widgetKey="weatherWidget"
+          toggleProperty="isWeatherWidgetActive"
+          isActive={weatherWidget.isWeatherWidgetActive}
         />
       </MenubarContent>
     </MenubarMenu>
