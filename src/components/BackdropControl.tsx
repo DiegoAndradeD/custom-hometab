@@ -1,7 +1,10 @@
+// Components
 import { Check } from "lucide-react";
+// Stores
 import useUIStore from "../stores/ui.store";
 import { MenubarItem } from "./ui/menubar";
 import { Slider } from "./ui/slider";
+// Utils
 import { cn } from "../lib/utils";
 
 const BackdropControl = () => {
@@ -14,7 +17,7 @@ const BackdropControl = () => {
           className="hover:!bg-transparent cursor-pointer w-full"
           onClick={() => toggleBackdrop()}
         >
-          <p>Toggle backdrop</p>
+          <p>Backdrop</p>
         </MenubarItem>
         {isBackdropActive && <Check width={16} height={16} />}
       </div>

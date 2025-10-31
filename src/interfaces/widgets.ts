@@ -22,3 +22,7 @@ export interface IStickyNotesWidget {
   isStickyNotesActive: boolean;
   notes: IStickyNote[];
 }
+
+export interface INewsFeedWidget {
+  isNewsFeedActive: boolean;
+}

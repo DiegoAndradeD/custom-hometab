@@ -90,7 +90,7 @@ export const NoteEditor = ({ note, onUpdate, onDelete }: NoteEditorProps) => {
   );
 
   return (
-    <div className="relative p-2 border border-zinc-700/50 rounded-xl bg-zinc-950/40 backdrop-blur-lg">
+    <div className="relative p-2 border border-zinc-700/50 rounded-xl bg-zinc-950/20 backdrop-blur-lg">
       <button
         onClick={() => onDelete(note.id)}
         className="absolute top-2 right-2 p-0.5 rounded-full text-zinc-500 hover:text-red-500 transition-colors z-10"

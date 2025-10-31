@@ -59,7 +59,7 @@ const StickyNotes = () => {
   };
 
   return (
-    <HoverCard openDelay={10} closeDelay={10} open={true}>
+    <HoverCard openDelay={10} closeDelay={10}>
       <HoverCardTrigger
         className="bg-background px-4 py-1 rounded-2xl text-sm !h-7 !min-h-7 !max-h-7 flex items-center
       justify-center text-foreground"
@@ -71,9 +71,9 @@ const StickyNotes = () => {
         className="!w-96 border border-zinc-700/50 rounded-xl"
         side="top"
       >
-        <Card className="border-0 p-0 bg-transparent">
+        <Card className="border-0 p-0 bg-transparent !shadow-none">
           <CardHeader className="p-0 mb-2 flex flex-row items-center justify-between">
-            <CardTitle className="text-xl font-bold">StickyNotes</CardTitle>
+            <CardTitle className="text-xl font-bold">Sticky Notes</CardTitle>
           </CardHeader>
           {notes.length > 0 && (
             <CardContent className="p-0 max-h-96 overflow-y-auto space-y-2 bg-transparent">
@@ -88,7 +88,7 @@ const StickyNotes = () => {
             </CardContent>
           )}
 
-          <CardFooter className="p-0">
+          <CardFooter className="p-0 border-none">
             <ButtonGroup aria-label="notes-actions-buttons">
               <Button
                 size="icon"

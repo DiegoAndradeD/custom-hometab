@@ -2,6 +2,7 @@ import { DateTimeVariant } from "../enums";
 import type {
   IBookmarksWidget,
   IDateAndTimeWidget,
+  INewsFeedWidget,
   ISearchBarWidget,
   IStickyNotesWidget,
 } from "../interfaces/widgets";
@@ -12,6 +13,7 @@ interface UIStoreState {
   dateAndTimeWidget: IDateAndTimeWidget;
   bookmarksWidget: IBookmarksWidget;
   stickyNotesWidget: IStickyNotesWidget;
+  newsFeedWidget: INewsFeedWidget;
 }
 
 type WidgetKeys = keyof UIStoreState;
@@ -40,6 +42,9 @@ export const widgetsStoreInitialState: UIStoreState = {
   stickyNotesWidget: {
     isStickyNotesActive: false,
     notes: [],
+  },
+  newsFeedWidget: {
+    isNewsFeedActive: false,
   },
 };
 

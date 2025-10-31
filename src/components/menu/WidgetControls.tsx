@@ -35,6 +35,7 @@ const WidgetControls = () => {
     dateAndTimeWidget,
     bookmarksWidget,
     stickyNotesWidget,
+    newsFeedWidget,
     updateWidget,
   } = useWidgetsStore();
 
@@ -44,6 +45,7 @@ const WidgetControls = () => {
       | "dateAndTimeWidget"
       | "bookmarksWidget"
       | "stickyNotesWidget"
+      | "newsFeedWidget"
   >(
     key: K,
     prop: keyof (typeof widgetsStoreInitialState)[K]
@@ -160,6 +162,19 @@ const WidgetControls = () => {
           <div className="flex items-center justify-between w-full">
             Sticky Notes
             {stickyNotesWidget.isStickyNotesActive && (
+              <Check width={16} height={16} />
+            )}
+          </div>
+        </MenubarItem>
+
+        <MenubarSeparator />
+
+        <MenubarItem
+          onClick={() => toggleWidget("newsFeedWidget", "isNewsFeedActive")}
+        >
+          <div className="flex items-center justify-between w-full">
+            News Feed
+            {newsFeedWidget.isNewsFeedActive && (
               <Check width={16} height={16} />
             )}
           </div>

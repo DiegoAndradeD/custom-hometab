@@ -7,6 +7,7 @@ import DateAndTime from "./components/DateAndTime";
 import SearchBar from "./components/SearchBar";
 import Weather from "./components/Weather";
 import StickyNotes from "./components/stickyNotes/StickyNotes";
+import NewsFeed from "./components/NewsFeed";
 // Stores
 import useModalStore, { LayoutModal } from "./stores/modal.store";
 import useUIStore from "./stores/ui.store";
@@ -19,6 +20,7 @@ function App() {
     dateAndTimeWidget,
     bookmarksWidget,
     stickyNotesWidget,
+    newsFeedWidget,
   } = useWidgetsStore();
 
   const modalRegistry: Record<LayoutModal, React.ComponentType> = {
@@ -102,6 +104,11 @@ function App() {
             }
           >
             <BookmarkList />
+          </div>
+          <div
+            className={newsFeedWidget.isNewsFeedActive ? "block" : "invisible"}
+          >
+            <NewsFeed />
           </div>
         </div>
       </section>

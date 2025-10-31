@@ -161,11 +161,13 @@ const Weather = () => {
         <Item variant="default" className="p-0">
           <ItemContent>
             <ItemTitle>Today</ItemTitle>
-            <ItemDescription>{weatherInfo.label}</ItemDescription>
+            <ItemDescription className="text-foreground/80">
+              {weatherInfo.label}
+            </ItemDescription>
           </ItemContent>
           <ItemActions>{weatherInfo.icon}</ItemActions>
         </Item>
-        <div className="text-xs text-muted-foreground mt-1 space-y-0.5 flex items-center gap-2">
+        <div className="text-xs text-foreground/80 mt-1 space-y-0.5 flex items-center gap-2">
           <p>Sensation: {weatherInfo.feelsLike}°C</p>
           <Separator orientation="vertical" className="!h-4" />
           <p>Humidity: {weatherInfo.humidity}%</p>
